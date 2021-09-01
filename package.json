@@ -1,0 +1,24 @@
+{
+  "name": "my-translator",
+  "version": "1.0.0",
+  "description": "Text translator using google API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo test",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
+  },
+  "author": "Ajith kumar R",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "config": "^3.3.6",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.2",
+    "morgan": "^1.10.0"
+  }
+}
