@@ -1,7 +1,8 @@
 # todo
-- webserver
-- database
-- api based coding
-- cache machanisum & pre-cache
-- docs & comments
-- testing
+
+[] web-server
+[] database
+[] api based coding
+[] cache mechanism & pre-cache
+[] docs & comments
+[] testing
