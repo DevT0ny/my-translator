@@ -1,20 +1,33 @@
 const { Translate } = require('@google-cloud/translate').v2
 const gTranslate = new Translate()
+const languages = require('../config/langs.json')
+
+/**
+ * Translation result
+ * @typedef {Object} translated
+ * @property {string} lang text language
+ * @property {string|string[]} text translated text
+ */
 
 /**
  * Translates text to target language
  * @param {(string|string[])} text text to be translated
  * @param {string} from source language
  * @param {string} to target language
+ * @returns Promise<translated> returns translation(s)
  */
 
-async function translate(text, from, to) {
-  const [translations] = await gTranslate.translate(text, { from, to })
-  return Array.isArray(translations) ? translations : [translations]
+async function translate(from, text, to) {
+  const [translations] = from !== to ? await gTranslate.translate(text, { from, to }) : [text]
+  return {
+    lang: to,
+    text: Array.isArray(translations) ? translations : [translations],
+  }
 }
 
 /**
  * Lists available translation language with their names in English (the default).
+ * @returns Promise<string[]> returns languages
  */
 
 async function listLanguages() {
@@ -22,7 +35,14 @@ async function listLanguages() {
   return languages
 }
 
+async function detectLanguage(text) {
+  const [detections] = await gTranslate.detect(text)
+  return Array.isArray(detections) ? detections : [detections]
+}
+
 module.exports = {
   translate,
   listLanguages,
+  listLanguagesOffline: () => languages,
+  detectLanguage,
 }

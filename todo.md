@@ -3,6 +3,6 @@
 [x] web-server
 [x] database
 [x] api based coding
-[] cache mechanism & pre-cache
+[x] cache mechanism & pre-cache
 [] docs & comments
 [] testing
