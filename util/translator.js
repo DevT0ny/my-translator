@@ -5,8 +5,8 @@ const languages = require('../config/langs.json')
 /**
  * Translation result
  * @typedef {Object} translated
- * @property {string} lang text language
- * @property {string|string[]} text translated text
+ * @property {string} lang translated text language
+ * @property {string[]} text translated text
  */
 
 /**
@@ -27,13 +27,18 @@ async function translate(from, text, to) {
 
 /**
  * Lists available translation language with their names in English (the default).
- * @returns Promise<string[]> returns languages
+ * @returns Promise<string[]> returns supported languages
  */
 
 async function listLanguages() {
   const [languages] = await gTranslate.getLanguages()
+  console.log('ya')
   return languages
 }
+
+/**
+ * Detects language of given text input
+ */
 
 async function detectLanguage(text) {
   const [detections] = await gTranslate.detect(text)

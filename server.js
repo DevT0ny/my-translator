@@ -1,11 +1,14 @@
+// imports
 require('dotenv').config()
 const express = require('express')
 
+// utils
 const { isDev } = require('./util/constants')
 const translator = require('./util/translator')
 const cache = require('./util/cache')
 const validator = require('./util/validator')
 
+// routes
 const devRoute = require('./routes/dev')
 
 const app = express()
@@ -30,6 +33,7 @@ if (isDev) {
 
 app.post('/', async (req, res) => {
   try {
+    // validation
     let { text, from, to } = req.body
     if (!text || !validator.isString(text)) throw new Error('Invalid text value')
     if (!to || !validator.isString(to)) throw new Error('Invalid to value')
@@ -37,6 +41,7 @@ app.post('/', async (req, res) => {
 
     text = text.trim()
 
+    // get supported languages and validate input
     const langs = translator.listLanguagesOffline().map(({ code }) => code)
     if (from && !langs.includes(from)) throw new Error('from language is not supported')
     if (!langs.includes(to)) throw new Error('to language is not supported')
@@ -46,9 +51,11 @@ app.post('/', async (req, res) => {
       from = detection.language
     }
 
+    // check already exists in cache database
     const cacheResult = await cache.get(from, to, text)
     if (cacheResult) return res.json({ translatedText: cacheResult[to] })
 
+    // pre cache: performs translation for all supported languages and stores in database asynchronously
     cache
       .preSet(from, text, langs, translator.translate)
       .then(() => isDev && console.log(chalk.greenBright('--- successfully saved ---')))
@@ -57,7 +64,10 @@ app.post('/', async (req, res) => {
         console.error(error)
       })
 
+    // get translation using google cloud translation api
+    //isDev && console.time('translate req')
     const { text: translatedText } = await translator.translate(from, text, to)
+    //isDev && console.timeEnd('translate req')
     res.json({ translatedText: translatedText[0] })
   } catch (error) {
     console.error(error)

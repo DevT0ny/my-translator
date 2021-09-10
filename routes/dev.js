@@ -36,4 +36,15 @@ router.post('/detect', async (req, res) => {
   }
 })
 
+router.get('/lang', async (req, res) => {
+  try {
+    const { force } = req.params
+    const langs = !!force ? await translator.listLanguages() : translator.listLanguagesOffline()
+    res.json(langs)
+  } catch (error) {
+    console.error(error)
+    res.status(400).json({ message: error.message })
+  }
+})
+
 module.exports = router
