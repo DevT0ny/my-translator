@@ -64,8 +64,8 @@ describe('input validation tests', () => {
   })
 })
 
-describe('translatiion tests', () => {
-  jest.setTimeout(30 * 1000)
+describe('translation tests', () => {
+  jest.setTimeout(40 * 1000)
 
   it('translate "Hello world" to hindi', async () => {
     const text = 'Hello world'

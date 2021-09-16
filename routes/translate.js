@@ -67,7 +67,8 @@ router.post('/', async (req, res) => {
 /* POST /translate/type2
  * request should contain `text`, `from` lang and `to` lang
  * responds with translated text
- * note : this request does not wait for cache
+ * note : this request does not wait for cache to complete,
+ * because of asynchronous task it is also difficult to test.
  */
 
 router.post('/type2', async (req, res) => {

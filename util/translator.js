@@ -3,8 +3,8 @@ const gTranslate = new Translate()
 const languages = require('../config/langs.json')
 
 /**
- * Translation result
- * @typedef {Object} translated
+ * Translation result definition
+ * @typedef {Object} Translated
  * @property {string} lang translated text language
  * @property {string[]} text translated text
  */
@@ -14,7 +14,7 @@ const languages = require('../config/langs.json')
  * @param {(string|string[])} text text to be translated
  * @param {string} from source language
  * @param {string} to target language
- * @returns Promise<translated> returns translation(s)
+ * @returns Promise<Translated> returns translation(s)
  */
 
 async function translate(from, text, to) {
@@ -26,8 +26,15 @@ async function translate(from, text, to) {
 }
 
 /**
+ * Language type definition
+ * @typedef {Object} Language
+ * @property {string} code code-name for language
+ * @property {string} name language name
+ */
+
+/**
  * Lists available translation language with their names in English (the default).
- * @returns Promise<string[]> returns supported languages
+ * @returns Promise<Language[]> returns supported languages
  */
 
 async function listLanguages() {
@@ -49,5 +56,4 @@ module.exports = {
   listLanguages,
   listLanguagesOffline: () => languages,
   detectLanguage,
-  isCachedCreadentials: !!gTranslate.authClient.cachedCredential,
 }

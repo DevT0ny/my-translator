@@ -1,32 +1,45 @@
 # My Translator
-A text translator using google API
+A text translator using Google cloud translation API
 
-# features
-- caches results
-- smart pre cache : saves translations of all supported languages ahead of user input.
 
-# install & setup
-- clone this repo using git or downloading zip file.
-- project assumes that you have already installed nodejs & mysql
+# Install & setup
 
-# setup
-- navigate to project directory in terminal
-- run ```npm i```
-- if you want run this project under development mode ```npm i -D```
+1. Clone this repo using git or downloading zip file.
+2. Project assumes that you have already installed latest version of  `nodejs`(> v10) & `mysql`(v8)
+3. Navigate to project directory in terminal & run 
+  ```
+  npm i
+  ```
 
-## configuring environment
-- copy `.env.example` template file as `.env` and provide values to it.
-- if you have not installed dev dependecies (`npm i -D`) then provide `NODE_ENV=production` otherwise `NODE_ENV=development`
-- google api credentials json file will be sent via mail, place the file inside `conifg` directory  and set `GOOGLE_APPLICATION_CREDENTIALS=./config/<credentials_filename>`
+4. If you want run this project under development mode run 
+  ```
+  npm i -D
+  ```
 
-## staring server
-```npm start``` will start web server normal
-```npm run watch``` will watch files and reloads server if changes occur
+# Configuring environment
+
+1. Copy `.env.example` template file as `.env` and provide values to it.
+2. If you have *not* installed dev dependencies (`npm i -D`) then provide `NODE_ENV=production` otherwise `NODE_ENV=development`
+3. Google API credentials JSON file will be sent via mail, place the file inside `conifg` directory and set
+  `GOOGLE_APPLICATION_CREDENTIALS=./config/<credentials_filename>`
+
+
+# Quickstart
+
+1. To start server
+  ```
+  npm start
+  ``` 
+2. To start testing (*you may have to run twice*)
+  ```
+  npm test
+  ``` 
+
 
 ## consuming API *use this as input for rest client (eg. Insomnia, postman, etc..)*
 ```
 curl --request POST \
-  --url http://localhost:7890/ \
+  --url http://localhost:7890/translate \
   --header 'content-type: application/json' \
   --data '{
 	"text": "Hello world",
@@ -34,3 +47,8 @@ curl --request POST \
 	"to": "hi"
 }'
 ```
+
+## NOTE
+A very first request may take near 20 sec to process, I have tried solve this issue but none worked. 
+I believe this is because of Google's OAuth procedure. Once it has cached the OAuth response next 
+requests will be completed within <2 sec (even for different text input requests) unless if you restart the server.
