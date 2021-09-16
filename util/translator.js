@@ -32,7 +32,6 @@ async function translate(from, text, to) {
 
 async function listLanguages() {
   const [languages] = await gTranslate.getLanguages()
-  console.log('ya')
   return languages
 }
 
@@ -50,4 +49,5 @@ module.exports = {
   listLanguages,
   listLanguagesOffline: () => languages,
   detectLanguage,
+  isCachedCreadentials: !!gTranslate.authClient.cachedCredential,
 }

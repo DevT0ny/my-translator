@@ -121,11 +121,4 @@ const Translation = db.define('translation', {
   zh: { type: DataTypes.TEXT },
 })
 
-Translation.sync()
-  .then(() => console.log('Table synced'))
-  .catch((err) => {
-    console.error('Table syncing failed...')
-    throw err
-  })
-
 module.exports = Translation

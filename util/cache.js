@@ -12,8 +12,13 @@ const get = (from, to, text) =>
 const preSet = async (from, text, langs, translate) => {
   const translationsReq = langs.map((to) => translate(from, text, to))
   const translationsRes = await Promise.all(translationsReq)
-  const translations = Object.fromEntries(translationsRes.map(({ lang, text }) => [lang, text[0]]))
-  return await Translation.create(translations)
+
+  const translations = Object.fromEntries(
+    translationsRes.map(({ lang, text: [text] }) => [lang, text])
+  )
+  //console.log(translations)
+  const createResult = await Translation.create(translations)
+  return createResult
 }
 
 module.exports = {

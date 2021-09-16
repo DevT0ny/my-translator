@@ -4,15 +4,21 @@
   "description": "Text translator using google API",
   "main": "server.js",
   "scripts": {
-    "test": "echo test",
+    "test": "NODE_ENV=node DB_NAME=test jest",
     "start": "node server.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "gen-env": "sed 's/=.*$/=/' .env > .env.example"
   },
   "author": "Ajith kumar R",
   "license": "MIT",
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "dependencies": {
     "@google-cloud/translate": "^6.2.7",
-    "axios": "^0.21.1",
     "config": "^3.3.6",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -21,7 +27,9 @@
   },
   "devDependencies": {
     "chalk": "^4.1.2",
+    "jest": "^27.1.1",
     "morgan": "^1.10.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "supertest": "^6.1.6"
   }
 }

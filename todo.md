@@ -4,5 +4,5 @@
 [x] database
 [x] api based coding
 [x] cache mechanism & pre-cache
-[] docs & comments
-[] testing
+[x] docs & comments
+[x] testing
